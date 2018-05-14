@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>shity thing</title>
+</head>
+<body>
+    <h1>shity</h1>
+    <div> content-length </div>
+    <div id='clength'> </div>
+    <div> content-total </div>
+    <div id='ctotal'> </div>
+    <div> arrayBuffer </div>
+    <div id='aBuffer'> </div>
+</body>
+<script>
+    let contentLength = null;
+    let progressCount = 0
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "/data", true);
+    xhr.responseType = "arraybuffer";
+    //xhr.overrideMimeType('text\/plain; charset=x-user-defined');
+    xhr.onreadystatechange = () => {
+        if (this.readyState == this.HEADERS_RECEIVED) {
+            contentLength = x = xhr.getResponseHeader(("content-length"));
+            console.log(`content length:${contentLength} `);
+        }
+    }
+
+    xhr.addEventListener("progress", (e) => {
+        progressCount++
+        console.log(`content total ${e.total}`);
+        document.getElementById("ctotal").innerHTML = e.total;
+    });
+
+    xhr.onload = (oEvent) => {
+        let arrayBuffer = new Uint8Array(xhr.response).length;
+        console.log(`arraybufffer: ${arrayBuffer} contentlength: ${contentLength}`);
+        document.getElementById("clength").innerHTML = contentLength;
+        document.getElementById("aBuffer").innerHTML = arrayBuffer;
+        progressCount = 0
+    };
+
+    xhr.send();
+</script>
+</html>
