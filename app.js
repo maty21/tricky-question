@@ -10,7 +10,6 @@ app.get('/', (req, res)=> {
 });
 
 app.get('/data',  (req, res)=> {
-  //  const  readStream = fs.createReadStream('./codpaste-teachingpack.pdf');
   const  readStream = fs.createReadStream('./hkube overview.pdf');
     res.writeHead(200, {
         'Transfer-Encoding': 'chunked',
